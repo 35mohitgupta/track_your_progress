@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 
 @Repository
-public interface ProgressRepository extends MongoRepository<DailyProgress, LocalDate> {
+public interface ProgressRepository extends MongoRepository<DailyProgress, String> {
 }

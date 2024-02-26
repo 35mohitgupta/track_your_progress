@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -21,6 +22,9 @@ public class TaskService {
 
     @Autowired
     protected ProgressRepository progressRepository;
+
+    //DateTimeFomatter to format the date as 2021-12-31
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     //Service method to create a new task
     public TaskDTO createTask(TaskDTO taskDTO) {
@@ -84,9 +88,10 @@ public class TaskService {
 
     private void saveDailyProgress(ProgressRequest progressRequest) {
         final LocalDate progressDate = progressRequest.getProgressDate() == null ? LocalDate.now() : progressRequest.getProgressDate();
-        final DailyProgress dailyProgress = progressRepository.findById(progressDate).orElse(null);
+        final DailyProgress dailyProgress = progressRepository.findById(progressDate.format(DATE_FORMATTER)).orElse(null);
         if (dailyProgress == null) {
-            progressRepository.save(new DailyProgress(progressDate, progressRequest.getProgessList().stream().map(TaskProgressDTO::toTaskProgress).toList()));
+            final DailyProgress newDailyProgress = new DailyProgress(progressDate.format(DATE_FORMATTER), progressRequest.getProgessList().stream().map(TaskProgressDTO::toTaskProgress).toList());
+            progressRepository.save(newDailyProgress);
         } else {
             dailyProgress.getProgressList().addAll(progressRequest.getProgessList().stream().map(TaskProgressDTO::toTaskProgress).toList());
             progressRepository.save(dailyProgress);
@@ -95,7 +100,7 @@ public class TaskService {
 
     public ProgressRequest getProgressForDate(String date) {
         final LocalDate progressDate = date == null ? LocalDate.now() : LocalDate.parse(date);
-        final DailyProgress dailyProgress = progressRepository.findById(progressDate).orElse(null);
+        final DailyProgress dailyProgress = progressRepository.findById(progressDate.format(DATE_FORMATTER)).orElse(null);
         if (dailyProgress == null) {
             return new ProgressRequest(progressDate, List.of());
         } else {

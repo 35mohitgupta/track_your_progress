@@ -36,7 +36,7 @@ public class TaskController {
         return ResponseEntity.ok(taskService.addProgressToTasks(progressRequest));
     }
 
-    @DeleteMapping("/close/{taskName}")
+    @DeleteMapping("/{taskName}")
     public ResponseEntity<?> closeTask(@PathVariable String taskName) {
         return ResponseEntity.ok(taskService.markTaskAsCompleted(taskName));
     }

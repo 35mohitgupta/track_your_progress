@@ -2,6 +2,7 @@ package com.srs.progresstracker.document;
 
 import com.srs.progresstracker.dto.TaskStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -17,8 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Document
+@Builder
 public class DailyProgress {
     @Id
-    private LocalDate date;
+    private String date;
     private List<TaskProgress> progressList;
 }
