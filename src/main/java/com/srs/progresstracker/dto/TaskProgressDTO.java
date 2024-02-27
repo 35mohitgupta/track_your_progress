@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Data
 public class TaskProgressDTO {
     private String taskName;
+    private String whatWasDone;
     private BigDecimal timeInvested;
 
     //Method to convert TaskProgressDTO to TaskProgress
@@ -19,6 +20,7 @@ public class TaskProgressDTO {
         TaskProgress taskProgress = new TaskProgress();
         taskProgress.setTaskName(taskProgressDTO.getTaskName());
         taskProgress.setTimeInvested(taskProgressDTO.getTimeInvested());
+        taskProgress.setWhatWasDone(taskProgressDTO.getWhatWasDone());
         return taskProgress;
     }
 
@@ -27,6 +29,7 @@ public class TaskProgressDTO {
         TaskProgressDTO taskProgressDTO = new TaskProgressDTO();
         taskProgressDTO.setTaskName(taskProgress.getTaskName());
         taskProgressDTO.setTimeInvested(taskProgress.getTimeInvested());
+        taskProgressDTO.setWhatWasDone(taskProgress.getWhatWasDone());
         return taskProgressDTO;
     }
 

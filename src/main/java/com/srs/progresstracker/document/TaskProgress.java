@@ -11,5 +11,6 @@ import java.math.BigDecimal;
 @Data
 public class TaskProgress {
     private String taskName;
+    private String whatWasDone;
     private BigDecimal timeInvested;
 }
